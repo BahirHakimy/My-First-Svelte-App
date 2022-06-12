@@ -1,30 +1,48 @@
 <script lang="ts">
-	export let name: string;
+  import HomeAndSquares from "./components/HomeAndSquares.svelte";
+  import WinSquares from "./components/WinSquares.svelte";
+  import type { PlayerProps } from "./types/props";
+
+  let players: PlayerProps[] = [
+    { color: "tomato", id: 1 },
+    { color: "dodgerblue", id: 2 },
+    { color: "gold", id: 3 },
+    { color: "green", id: 4 },
+  ];
 </script>
 
 <main>
-	<h1>Hello {name}!</h1>
-	<p>Visit the <a href="https://svelte.dev/tutorial">Svelte tutorial</a> to learn how to build Svelte apps.</p>
+  <div id="gameContainer">
+    {#each players as player}
+      <HomeAndSquares {player} />
+      {#if player.id === 2}
+        <WinSquares {players} />
+      {/if}
+    {/each}
+  </div>
 </main>
 
 <style>
-	main {
-		text-align: center;
-		padding: 1em;
-		max-width: 240px;
-		margin: 0 auto;
-	}
+  main {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  #gameContainer {
+    display: grid;
+    grid-template-columns: 240px auto 240px;
+    grid-template-rows: 240px auto 240px;
+    position: relative;
+    width: 600px;
+    height: 600px;
+    border-radius: 10px;
+    background: lightsalmon;
+  }
 
-	h1 {
-		color: #ff3e00;
-		text-transform: uppercase;
-		font-size: 4em;
-		font-weight: 100;
-	}
-
-	@media (min-width: 640px) {
-		main {
-			max-width: none;
-		}
-	}
+  @media (min-width: 640px) {
+    main {
+      max-width: none;
+    }
+  }
 </style>
